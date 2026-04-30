@@ -1,8 +1,8 @@
 -- name: CreateUser :one
 INSERT INTO users (
     id,
-    created_at,
-    updated_at,
+    create_at,
+    update_at,
     user_id,
     email,
     hashed_password)

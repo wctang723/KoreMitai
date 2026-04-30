@@ -12,6 +12,7 @@
 !go.mod
 
 !*.sql
+!sqlc.yaml
 
 !README.md
 !LICENSE
