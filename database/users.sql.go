@@ -15,24 +15,27 @@ INSERT INTO users (
     created_at,
     updated_at,
     user_id,
-    email)
+    email,
+    hashed_password)
 VALUES (
     gen_random_uuid (),
     NOW(),
     NOW(),
     $1,
-    $2)
+    $2,
+    $3)
 RETURNING
-    id, create_at, update_at, user_id, email
+    id, create_at, update_at, user_id, email, hashed_password
 `
 
 type CreateUserParams struct {
-	UserID string
-	Email  string
+	UserID         string
+	Email          string
+	HashedPassword string
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
-	row := q.db.QueryRowContext(ctx, createUser, arg.UserID, arg.Email)
+	row := q.db.QueryRowContext(ctx, createUser, arg.UserID, arg.Email, arg.HashedPassword)
 	var i User
 	err := row.Scan(
 		&i.ID,
@@ -40,13 +43,14 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.UpdateAt,
 		&i.UserID,
 		&i.Email,
+		&i.HashedPassword,
 	)
 	return i, err
 }
 
 const getUserInfo = `-- name: GetUserInfo :one
 SELECT
-    id, create_at, update_at, user_id, email
+    id, create_at, update_at, user_id, email, hashed_password
 FROM
     users
 WHERE
@@ -62,6 +66,7 @@ func (q *Queries) GetUserInfo(ctx context.Context, userID string) (User, error) 
 		&i.UpdateAt,
 		&i.UserID,
 		&i.Email,
+		&i.HashedPassword,
 	)
 	return i, err
 }

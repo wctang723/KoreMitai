@@ -4,13 +4,15 @@ INSERT INTO users (
     created_at,
     updated_at,
     user_id,
-    email)
+    email,
+    hashed_password)
 VALUES (
     gen_random_uuid (),
     NOW(),
     NOW(),
     $1,
-    $2)
+    $2,
+    $3)
 RETURNING
     *;
 
