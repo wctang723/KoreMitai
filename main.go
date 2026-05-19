@@ -2,16 +2,17 @@ package main
 
 import (
 	"database/sql"
-	_ "github.com/lib/pq"
 	"log"
 	"os"
+
+	_ "github.com/lib/pq"
 
 	// "github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/wctang723/KoreMitai/api"
 	"github.com/wctang723/KoreMitai/config"
 	"github.com/wctang723/KoreMitai/database"
-	"github.com/wctang723/KoreMitai/router"
 )
 
 func main() {
@@ -43,7 +44,8 @@ func main() {
 		ctx.String(200, "ok")
 	})
 
-	myrouter.POST("/users/create", router.UserRegister(&apiCfg))
+	myrouter.POST("/register/create", api.UserRegister(&apiCfg))
+	myrouter.POST("/login", api.UserLogin(&apiCfg))
 
 	myrouter.Run(":8080")
 	// log.Fatal(autotls.Run(myrouter, "localhost:8080"))

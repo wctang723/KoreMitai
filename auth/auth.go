@@ -66,10 +66,18 @@ func ValidateJWT(tokenString, tokenSecret string) (uuid.UUID, error) {
 		log.Fatal(err)
 	}
 
+	// INFO: Security check
+	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+		log.Fatal(err)
+	}
+
 	claims, ok := token.Claims.(*myclaims)
 	if !ok {
 		log.Fatal("unknown claims type, cannot proceed")
 	}
+	// TODO: check the expired time
+	// if claims.ExpiresAt.Time.Before(time.Now()) {log.Fatal()}
+
 	idstr := claims.Subject
 	id, err := uuid.Parse(idstr)
 	if err != nil {

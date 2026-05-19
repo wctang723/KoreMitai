@@ -16,10 +16,10 @@ VALUES (
 RETURNING
     *;
 
--- name: GetUserInfo :one
+-- name: GetUserByEmail :one
 SELECT
     *
 FROM
     users
 WHERE
-    user_id = $1;
+    email = $1;

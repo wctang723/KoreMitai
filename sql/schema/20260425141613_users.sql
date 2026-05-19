@@ -8,3 +8,6 @@ CREATE TABLE users (
     hashed_password text NOT NULL,
     CONSTRAINT users_surrogate_key PRIMARY KEY (id)
 );
+
+-- +goose Down
+DROP TABLE users;
