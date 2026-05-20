@@ -6,7 +6,7 @@ CREATE TABLE users (
     user_id text NOT NULL UNIQUE,
     email text NOT NULL UNIQUE,
     hashed_password text NOT NULL,
-    CONSTRAINT users_surrogate_key PRIMARY KEY (id)
+    CONSTRAINT users_surrogate_key PRIMARY KEY (id, user_id)
 );
 
 -- +goose Down
