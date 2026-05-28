@@ -11,13 +11,30 @@ import (
 	"github.com/google/uuid"
 )
 
+type Anime struct {
+	AnimesID  uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Title     string
+}
+
 type RefreshToken struct {
+	ID        uuid.UUID
 	Token     string
-	CreatedAt sql.NullTime
-	UpdatedAt sql.NullTime
-	UserID    uuid.NullUUID
-	ExpiresAt sql.NullTime
-	RevokedAt sql.NullTime
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	ExpiresAt time.Time
+	RevokedAt time.Time
+}
+
+type Review struct {
+	ReviewID  uuid.UUID
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Star      int32
+	Body      sql.NullString
+	UserID    uuid.UUID
+	AnimesID  uuid.UUID
 }
 
 type User struct {

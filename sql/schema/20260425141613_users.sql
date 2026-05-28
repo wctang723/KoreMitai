@@ -1,12 +1,11 @@
 -- +goose Up
 CREATE TABLE users (
-    id uuid,
+    id uuid PRIMARY KEY,
     create_at timestamp NOT NULL,
     update_at timestamp NOT NULL CHECK (age(update_at, create_at) >= '0 SECOND'::interval),
-    user_id text NOT NULL UNIQUE,
-    email text NOT NULL UNIQUE,
-    hashed_password text NOT NULL,
-    CONSTRAINT users_surrogate_key PRIMARY KEY (id, user_id)
+    user_id text UNIQUE NOT NULL,
+    email text UNIQUE NOT NULL,
+    hashed_password text NOT NULL
 );
 
 -- +goose Down

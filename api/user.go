@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/wctang723/KoreMitai/auth"
 	"github.com/wctang723/KoreMitai/config"
 	"github.com/wctang723/KoreMitai/database"
@@ -29,6 +28,7 @@ func UserRegister(cfg *config.ApiConfig) gin.HandlerFunc {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		}
 
+		// TODO: Might want some conversion from database.CreateUserParams to model.User for usage convience
 		user_params := database.CreateUserParams{
 			UserID:         user.UserID,
 			Email:          user.Email,
@@ -86,8 +86,8 @@ func UserLogin(cfg *config.ApiConfig) gin.HandlerFunc {
 
 		userRefreshToken := auth.MakeRefreshToken()
 		createRefreshTokenParams := database.CreateRefreshTokenParams{
-			Token:  userRefreshToken,
-			UserID: uuid.NullUUID{UUID: userinfo.ID},
+			Token: userRefreshToken,
+			ID:    userinfo.ID,
 		}
 
 		rt, err := cfg.Myqu.CreateRefreshToken(c, createRefreshTokenParams)

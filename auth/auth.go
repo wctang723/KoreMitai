@@ -75,8 +75,10 @@ func ValidateJWT(tokenString, tokenSecret string) (uuid.UUID, error) {
 	if !ok {
 		log.Fatal("unknown claims type, cannot proceed")
 	}
-	// TODO: check the expired time
-	// if claims.ExpiresAt.Time.Before(time.Now()) {log.Fatal()}
+	// : check the expired time
+	if claims.ExpiresAt.Time.Before(time.Now()) {
+		log.Fatal()
+	}
 
 	idstr := claims.Subject
 	id, err := uuid.Parse(idstr)

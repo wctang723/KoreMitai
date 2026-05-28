@@ -13,6 +13,7 @@ import (
 	"github.com/wctang723/KoreMitai/api"
 	"github.com/wctang723/KoreMitai/config"
 	"github.com/wctang723/KoreMitai/database"
+	"github.com/wctang723/KoreMitai/routes"
 )
 
 func main() {
@@ -32,7 +33,7 @@ func main() {
 	apiCfg.Tokensecretkey = os.Getenv("JWTTOKENSECRET")
 
 	myrouter := gin.Default()
-	myrouter.GET("/", func(ctx *gin.Context) {
+	myrouter.GET("/healthz", func(ctx *gin.Context) {
 		ctx.String(200, "ok")
 	})
 
@@ -46,6 +47,11 @@ func main() {
 
 	myrouter.POST("/register/create", api.UserRegister(&apiCfg))
 	myrouter.POST("/login", api.UserLogin(&apiCfg))
+	myrouter.GET("/reviews/:reviewsid", api.GetReviews(&apiCfg))
+	myrouter.GET("/animes/:animesid", api.GetAnimes(&apiCfg))
+
+	// TODO: routes package not implemented yet
+	routes.SetTimeoutRoutes(myrouter)
 
 	myrouter.Run(":8080")
 	// log.Fatal(autotls.Run(myrouter, "localhost:8080"))
