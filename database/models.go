@@ -24,7 +24,7 @@ type RefreshToken struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	ExpiresAt time.Time
-	RevokedAt time.Time
+	RevokedAt sql.NullTime
 }
 
 type Review struct {

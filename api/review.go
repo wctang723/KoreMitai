@@ -8,19 +8,14 @@ import (
 	"github.com/wctang723/KoreMitai/config"
 )
 
-func GetReviews(cfg *config.ApiConfig) gin.HandlerFunc {
+func GetReview(cfg *config.ApiConfig) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		c := ctx.Request.Context()
-		reviewID := ctx.Param("reviewsID")
-		reviewUUID, err := uuid.Parse(reviewID)
+		reviewID := ctx.Param("reviewsid")
 
+		reviewUUID, err := uuid.Parse(reviewID)
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		if reviewID == "" {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "No review id present!"})
 			return
 		}
 
@@ -30,6 +25,12 @@ func GetReviews(cfg *config.ApiConfig) gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, gin.H{"review_id": reviewInfo.AnimesID, "review_body": reviewInfo.Body, "review_star": reviewInfo.Star})
+		ctx.JSON(http.StatusOK, gin.H{"review_id": reviewInfo.AnimesID, "review_body": reviewInfo.Body.String, "review_star": reviewInfo.Star})
+	}
+}
+
+func GetReviews(cfg *config.ApiConfig) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
 	}
 }

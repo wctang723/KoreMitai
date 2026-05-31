@@ -4,14 +4,12 @@ INSERT INTO refresh_tokens (
     token,
     created_at,
     updated_at,
-    expires_at,
-    revoked_at)
+    expires_at)
 VALUES (
     $1,
     $2,
     NOW(),
     NOW(),
-    NOW() + interval '60 days',
-    $3)
+    NOW() + interval '60 days')
 RETURNING
     *;

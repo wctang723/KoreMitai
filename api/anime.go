@@ -8,20 +8,14 @@ import (
 	"github.com/wctang723/KoreMitai/config"
 )
 
-func GetAnimes(cfg *config.ApiConfig) gin.HandlerFunc {
+func GetAnime(cfg *config.ApiConfig) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		c := ctx.Request.Context()
+		animesID := ctx.Param("animesid")
 
-		animesID := ctx.Param("animesID")
 		animesUUID, err := uuid.Parse(animesID)
-
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		if animesID == "" {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "No anime id present!"})
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Parsing went wrong", "error_msg": err.Error()})
 			return
 		}
 
@@ -32,5 +26,11 @@ func GetAnimes(cfg *config.ApiConfig) gin.HandlerFunc {
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{"animes_id": animesInfo.AnimesID, "animes_title": animesInfo.Title})
+	}
+}
+
+func GetAnimes(cfg *config.ApiConfig) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
 	}
 }

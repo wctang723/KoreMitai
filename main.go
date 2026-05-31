@@ -37,20 +37,17 @@ func main() {
 		ctx.String(200, "ok")
 	})
 
-	myrouter.GET("/animes", func(ctx *gin.Context) {
-		ctx.String(200, "ok")
-	})
-
-	myrouter.GET("/films", func(ctx *gin.Context) {
-		ctx.String(200, "ok")
-	})
-
-	myrouter.POST("/register/create", api.UserRegister(&apiCfg))
+	// TODO: test all the routes handler work as expected!
+	myrouter.POST("/register", api.UserRegister(&apiCfg))
 	myrouter.POST("/login", api.UserLogin(&apiCfg))
-	myrouter.GET("/reviews/:reviewsid", api.GetReviews(&apiCfg))
-	myrouter.GET("/animes/:animesid", api.GetAnimes(&apiCfg))
 
-	// TODO: routes package not implemented yet
+	myrouter.GET("/animes", api.GetAnimes(&apiCfg))
+	myrouter.GET("/reviews", api.GetReviews(&apiCfg))
+
+	myrouter.GET("/animes/:animesid", api.GetAnime(&apiCfg))
+	myrouter.GET("/reviews/:reviewsid", api.GetReview(&apiCfg))
+
+	// NOTE: routes package not implemented yet
 	routes.SetTimeoutRoutes(myrouter)
 
 	myrouter.Run(":8080")

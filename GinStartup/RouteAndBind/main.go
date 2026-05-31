@@ -228,14 +228,14 @@ func VersionMiddleware() gin.HandlerFunc {
 // func startPage(c *gin.Context) {
 // 	var person Person
 //
-// 	// NOTE: There are some issue with ShouldBind method when it comes to the JSON data.
+// 	// INFO: There are some issue with ShouldBind method when it comes to the JSON data.
 // 	// The time parsing would not work as expected as set with time_format.
 // 	// The issue detail: https://grok.com/share/c2hhcmQtMg_ad94e8ed-1e9f-4f53-b954-b82b5415ce03 & Gin issues #1193
+//
 // 	if err := c.ShouldBind(&person); err != nil {
 // 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 // 		return
 // 	}
-
 //
 // 	log.Printf("Name: %s, Address: %s, Birthday: %s\n", person.Name, person.Address, person.Birthday)
 // 	c.JSON(http.StatusOK, gin.H{
